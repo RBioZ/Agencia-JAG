@@ -1,4 +1,6 @@
 import React from 'react';
+import {Image, View, StatusBar} from 'react-native';
+
 import {
   Container, 
   InputDiv, 
@@ -8,16 +10,10 @@ import {
   ButtonText
 } from './styles';
 
-import {Image, View, StatusBar} from 'react-native'
-
 import Logo from '../../../assets/logo.png'
-import { ScreenStackHeaderCenterView } from 'react-native-screens';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function index(props) {
   return (
-    <>
-    <StatusBar barStyle="light-content" backgroundColor="#312E38" />
     <Container>
 
       <View style={{alignItems:'center', position:'absolute', top:100, width:'100%'}}>
@@ -35,12 +31,10 @@ export default function index(props) {
           <ButtonText>
             Entrar
           </ButtonText>
-          
         </Button> 
 
       </InputDiv>
     </Container>
-    </>
   );
 }
 

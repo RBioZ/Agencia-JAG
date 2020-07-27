@@ -8,8 +8,10 @@ import {Container, Content, Card, CardHeader, CardContent, CardFooter, Title, De
 import Header from '../../components/Header';
 import Tabs from '../../components/Tabs';
 import Item from '../../components/Item';
+import Modal from '../../components/Modal';
 
 import Bar from 'react-native-progress/Bar';
+
 
 export default function Main(){
 
@@ -21,6 +23,7 @@ export default function Main(){
 				barStyle="light-content" 
 				backgroundColor="#312E38" 
 			/>
+      <Modal visible={true} />
       <Container>
 				<Header name="Project Bet Panel"/>
         <Content>
