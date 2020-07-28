@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StatusBar, Text, ScrollView, View, Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Animated} from 'react-native';
@@ -15,7 +15,12 @@ import Bar from 'react-native-progress/Bar';
 
 export default function Main(){
 
-  let screenWidth = Dimensions.get('window').width
+  const screenWidth = Dimensions.get('window').width
+  const [isOpenned, setIsOppened] = useState(true)
+
+  function handleToggleModal(){
+    setIsOppened((prevState) => !prevState)
+  }
 
   return(
     <>
@@ -23,7 +28,7 @@ export default function Main(){
 				barStyle="light-content" 
 				backgroundColor="#312E38" 
 			/>
-      <Modal visible={true} />
+      <Modal toggle={handleToggleModal} visible={isOpenned} />
       <Container>
 				<Header name="Project Bet Panel"/>
         <Content>
@@ -42,7 +47,7 @@ export default function Main(){
           <Text style={{color:'#FFF', marginHorizontal:20, marginTop:10}}>Status: EM ANDAMENTO</Text>
           <Bar style={{marginHorizontal:20, marginTop:10}} height={10} color={'#00D37E'} progress={0.4} width={screenWidth * 0.9} />
           <View style={{alignItems:'center'}}>
-            <TouchableOpacity style={{backgroundColor:'#232129', height:50, alignItem:'center',justifyContent:'center',borderRadius:5,paddingHorizontal:20,marginTop:10}}>
+            <TouchableOpacity onPress={() => handleToggleModal()} style={{backgroundColor:'#232129', height:50, alignItem:'center',justifyContent:'center',borderRadius:5,paddingHorizontal:20,marginTop:10}}>
               <Text style={{color:'#FFF', fontWeight:'bold'}}>MUDANÇAS / UPGRADE</Text>
             </TouchableOpacity>
           </View>
