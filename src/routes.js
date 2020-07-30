@@ -7,16 +7,24 @@ import Home from './pages/Home';
 import Details from './pages/Details';
 
 
+const AuthStack = createStackNavigator();
 const Stack = createStackNavigator();
+
+function Main(){
+  <Stack.Navigator screenOptions={{headerShown:false}}>
+    <Stack.Screen name="Home" component={Home} />
+    <Stack.Screen name="Details" component={Details} />
+  </Stack.Navigator>
+}
 
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown:false}}>
-        <Stack.Screen name="Logon" component={Logon} />
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Details" component={Details} />
-      </Stack.Navigator>
+      <AuthStack.Navigator screenOptions={{headerShown:false}}>
+        <AuthStack.Screen name="Logon" component={Logon} />
+        <AuthStack.Screen name="Home" component={Home} />
+        <AuthStack.Screen name="Details" component={Details} />
+      </AuthStack.Navigator>
     </NavigationContainer>
   );
 }

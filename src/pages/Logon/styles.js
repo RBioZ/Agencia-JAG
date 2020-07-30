@@ -31,6 +31,7 @@ export const Input = styled.TextInput`
   margin-top:10px;
   text-align:center;
   font-size:16px;
+  color:#FFF;
 `;
 
 export const Button = styled.TouchableOpacity`

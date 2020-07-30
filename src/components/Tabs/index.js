@@ -2,6 +2,7 @@ import React from 'react';
 import {Container, TabsContainer, TabItem, TabText} from './styles';
 
 import Icon from 'react-native-vector-icons/FontAwesome5'
+import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons'
 
 export default function Tabs(){
 	return(
@@ -25,3 +26,8 @@ export default function Tabs(){
 		</Container>
 	)
 }
+
+/*
+					<Icon2 name="logout" size={24} color="#FFF"/>
+					<TabText>Logout</TabText>
+*/

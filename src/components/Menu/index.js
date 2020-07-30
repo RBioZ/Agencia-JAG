@@ -4,7 +4,7 @@ import {Container, Nav, NavItem, NavText, SignOutButton, SignOutButtonText} from
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-export default function Menu(){
+export default function Menu(props){
   return(
 		<Container>
 
@@ -27,7 +27,7 @@ export default function Menu(){
 				</NavItem>
 			</Nav>
 
-			<SignOutButton onPress={() => {}}>
+			<SignOutButton onPress={props.logout}>
 				<SignOutButtonText>SAIR DO APP</SignOutButtonText>
 			</SignOutButton>
 

@@ -16,7 +16,7 @@ import Bar from 'react-native-progress/Bar';
 export default function Main(){
 
   const screenWidth = Dimensions.get('window').width
-  const [isOpenned, setIsOppened] = useState(true)
+  const [isOpenned, setIsOppened] = useState(false)
 
   function handleToggleModal(){
     setIsOppened((prevState) => !prevState)
