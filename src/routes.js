@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 
 import Logon from './pages/Logon';
 import Home from './pages/Home';
@@ -20,7 +20,7 @@ function Main(){
 function App() {
   return (
     <NavigationContainer>
-      <AuthStack.Navigator screenOptions={{headerShown:false}}>
+      <AuthStack.Navigator initialRouteName={true?"Logon":"Home"} screenOptions={{headerShown:false,cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS}} >
         <AuthStack.Screen name="Logon" component={Logon} />
         <AuthStack.Screen name="Home" component={Home} />
         <AuthStack.Screen name="Details" component={Details} />

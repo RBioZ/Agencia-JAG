@@ -37,10 +37,11 @@ export default function index(props) {
       password: "ZDw2[g,dTj)6a,V_"
     })
     .then(async function (response) {
-      let token = response.data.token;
-      await storage.setItem('token', token)
-      props.navigation.navigate('Home')
-      setLoading(false)
+      let data = response.data;
+      await storage.setItem('token', data.token);
+      await storage.setItem('name', data.user.name);
+      props.navigation.navigate('Home');
+      setLoading(false);
     })
     .catch(function (error) {
       setLoading(false)
