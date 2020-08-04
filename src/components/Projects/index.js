@@ -13,7 +13,7 @@ export default function index(props) {
     <Container onPress={props.nav} activeOpacity={0.5}>
       <Color/>
       <Content>
-        <Title>Projeto Bet Painel</Title>
+        <Title>{props.title}</Title>
       </Content>
     </Container>
   )

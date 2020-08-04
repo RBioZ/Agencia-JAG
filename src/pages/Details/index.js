@@ -3,7 +3,7 @@ import {StatusBar, Text, ScrollView, View, Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Animated} from 'react-native';
 import {PanGestureHandler, State, TouchableOpacity} from 'react-native-gesture-handler'
-
+import { useFocusEffect } from "@react-navigation/native"
 import {Container, Content, Card, CardHeader, CardContent, CardFooter, Title, Description, Annotation} from './styles';
 import Header from '../../components/Header';
 import Tabs from '../../components/Tabs';
@@ -12,15 +12,32 @@ import Modal from '../../components/Modal';
 
 import Bar from 'react-native-progress/Bar';
 
+import api from '../../services/api';
 
-export default function Main(){
+export default function Main(props){
 
   const screenWidth = Dimensions.get('window').width
-  const [isOpenned, setIsOppened] = useState(false)
+  const [isOpenned, setIsOppened] = useState(false);
+  const [] = useState()
 
-  function handleToggleModal(){
+  function handleToggleModal(props){
     setIsOppened((prevState) => !prevState)
   }
+
+  useFocusEffect(() => {
+    api.get(`/v1/feed/${props.route.params.id}`, {
+      headers: {
+        authorization: 'Bearer ' + props.route.params.token
+      }
+    })
+    .then(response => {
+      console.log(response.data);
+    })            
+    .catch(err => {
+      console.log(err)
+    })
+  
+  })
 
   return(
     <>
@@ -30,7 +47,7 @@ export default function Main(){
 			/>
       <Modal toggle={handleToggleModal} visible={isOpenned} />
       <Container>
-				<Header name="Project Bet Panel"/>
+				<Header name={props.route.params.id}/>
         <Content>
           <Card>
             <Item color={"#FFF"} />

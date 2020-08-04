@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import { ScrollView, View, Dimensions, BackHandler, Alert} from 'react-native';
+import { ScrollView, View, Dimensions, BackHandler, Alert, Text} from 'react-native';
 import { useFocusEffect } from "@react-navigation/native"
 import {Container, Card} from './styles';
 import Header from '../../components/Header';
@@ -16,7 +16,9 @@ export default function Main(props){
 	const screenWidth = Dimensions.get('window').width
 	const route = useRoute();
 	const [userName,setUserName] = useState(null);
-	const [userToken,setUserToken] = useState(null)
+	const [userToken,setUserToken] = useState(null);
+	const [userProjects,setUserProjects] = useState([])
+
 
 	useEffect(() => {
 		loadUser = async() => {
@@ -30,7 +32,7 @@ export default function Main(props){
 				}
 			})
 			.then(response => {
-				console.log(response.data)
+				setUserProjects(response.data)
 			})            
 			.catch(err => {
 				console.log(err)
@@ -41,8 +43,8 @@ export default function Main(props){
 
 
 
-	const handleToDetails = () => {
-		props.navigation.navigate('Details')
+	const handleToDetails = (id) => {
+		props.navigation.navigate('Details',{id:id,token:userToken})
 	}
 
 	const handleLogout = async () => {
@@ -78,15 +80,13 @@ export default function Main(props){
 				<Header name={userName}/>
 				<ScrollView pagingEnabled={true} horizontal={true} style={{maxHeight:600}}>
 					<View style={{width:screenWidth}}>
-						<Card>
-							<Projects nav={handleToDetails} />
-							<Projects />
-							<Projects />
-							<Projects />
-							<Projects />
-							<Projects />
-							<Projects />
-						</Card>
+						<Card 
+						data={userProjects}
+						renderItem={({item: project}) => (
+							<Projects id={project.id} nav={() => handleToDetails(project.id)} title={project.name}/>
+						)}
+						keyExtractor={(item) => item.id}
+						/>
 					</View>
 					<View style={{width:screenWidth}}>
 						<Menu logout={handleLogout} />

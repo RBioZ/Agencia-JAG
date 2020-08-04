@@ -33,8 +33,8 @@ export default function index(props) {
   async function handleLogin(){
     setLoading(true)
     api.post('/v1/users/signin', {
-      email: "admin@admin.com",
-      password: "ZDw2[g,dTj)6a,V_"
+      email: "rbioz@outlook.com",
+      password: "123456"
     })
     .then(async function (response) {
       let data = response.data;

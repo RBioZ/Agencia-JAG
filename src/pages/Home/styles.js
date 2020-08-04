@@ -9,7 +9,7 @@ export const Container = styled.View`
   justify-content:flex-end;
 `;
 
-export const Card = styled.ScrollView`
+export const Card = styled.FlatList`
 	flex:1;
 	background: #232129;
 	border-radius: 4px;
