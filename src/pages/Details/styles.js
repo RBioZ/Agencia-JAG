@@ -15,7 +15,7 @@ export const Content = styled.View`
 	z-index: 5;
 `;
 
-export const Card = styled.ScrollView`
+export const Card = styled.FlatList`
 	flex:1;
 	background: #232129;
 	border-radius: 4px;

@@ -18,7 +18,7 @@ export default function Main(props){
 
   const screenWidth = Dimensions.get('window').width
   const [isOpenned, setIsOppened] = useState(false);
-  const [] = useState()
+  const [data,setData] = useState([1,2,3])
 
   function handleToggleModal(props){
     setIsOppened((prevState) => !prevState)
@@ -31,12 +31,12 @@ export default function Main(props){
       }
     })
     .then(response => {
-      console.log(response.data);
+      setData(response.data.feed)
+      console.log(response.data.feed)
     })            
     .catch(err => {
       console.log(err)
     })
-  
   })
 
   return(
@@ -49,17 +49,13 @@ export default function Main(props){
       <Container>
 				<Header name={props.route.params.id}/>
         <Content>
-          <Card>
-            <Item color={"#FFF"} />
-            <Item color={"#FE001A"} />
-            <Item color={"#FE001A"}/>
-            <Item color={"#00D37E"}/>
-            <Item color={"#FE001A"}/>
-            <Item color={"#00D37E"}/>
-            <Item color={"#FFF"}/>
-            <Item color={"#FFF"}/>
-            <Item color={"#00D37E"}/>
-          </Card>
+        <Card 
+						data={["1","2"]}
+						renderItem={({item}) => (
+							<Item />
+						)}
+						keyExtractor={(item) => item}
+					/>
         </Content>
           <Text style={{color:'#FFF', marginHorizontal:20, marginTop:10}}>Status: EM ANDAMENTO</Text>
           <Bar style={{marginHorizontal:20, marginTop:10}} height={10} color={'#00D37E'} progress={0.4} width={screenWidth * 0.9} />
