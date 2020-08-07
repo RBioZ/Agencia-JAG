@@ -38,8 +38,9 @@ export default function index(props) {
     })
     .then(async function (response) {
       let data = response.data;
-      await storage.setItem('token', data.token);
+      api.defaults.headers.common['authorization'] = `Bearer ${data.token}`;
       await storage.setItem('name', data.user.name);
+      await storage.setItem('token', data.token);
       props.navigation.navigate('Home');
       setLoading(false);
     })

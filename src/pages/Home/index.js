@@ -24,13 +24,9 @@ export default function Main(props){
 		loadUser = async() => {
 			let name = await storage.getItem('name');
 			let token = await storage.getItem('token');
+			api.defaults.headers.common['authorization'] = `Bearer ${token}`;
 			setUserName(name)
-			setUserToken(token)
-			api.get('/v1/project/', {
-				headers: {
-					authorization: 'Bearer ' + token
-				}
-			})
+			api.get('/v1/project/')
 			.then(response => {
 				setUserProjects(response.data)
 			})            
@@ -43,26 +39,27 @@ export default function Main(props){
 
 
 
-	const handleToDetails = (id) => {
-		props.navigation.navigate('Details',{id:id,token:userToken})
+	const handleToDetails = ({id,name}) => {
+		props.navigation.navigate('Details',{id:id,name:name,token:userToken})
 	}
 
 	const handleLogout = async () => {
-		await storage.removeItem('token')
+		delete api.defaults.headers.common['authorization'];
 		await storage.removeItem('name')
+		await storage.removeItem('token')
 		props.navigation.navigate('Logon')
 	}
 
 	useFocusEffect(
 		React.useCallback(() => {
 			const onBackPress = () => {
-				Alert.alert("Hold on!", "Are you sure you want to Exit?", [
+				Alert.alert("Espere!", "Você tem certeza que quer sair?", [
 					{
-						text: "Cancel",
+						text: "Cancelar",
 						onPress: () => null,
 						style: "cancel"
 					},
-					{ text: "YES", onPress: () => BackHandler.exitApp() }
+					{ text: "Sim", onPress: () => BackHandler.exitApp() }
 				]);
 				return true;
 			};
@@ -74,7 +71,6 @@ export default function Main(props){
 		
 		}, []));
 
-
   return(
       <Container>
 				<Header name={userName}/>
@@ -83,7 +79,7 @@ export default function Main(props){
 						<Card 
 						data={userProjects}
 						renderItem={({item: project}) => (
-							<Projects id={project.id} nav={() => handleToDetails(project.id)} title={project.name}/>
+							<Projects id={project.id} nav={() => handleToDetails(project)} title={project.name}/>
 						)}
 						keyExtractor={(item) => item.id}
 						/>
@@ -92,7 +88,6 @@ export default function Main(props){
 						<Menu logout={handleLogout} />
 					</View>
 				</ScrollView>
-				<Tabs/>
 			</Container>
   );
 }

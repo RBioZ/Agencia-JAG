@@ -1,10 +1,30 @@
 import React, {useState} from 'react'
-import { View, Text,Modal, TouchableWithoutFeedback, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView } from 'react-native'
+import { View, Text,Modal, TouchableWithoutFeedback, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView, Alert} from 'react-native'
+
+import api from '../../services/api';
 
 export default function index(props) {
 
   const[q1,setQ1] = useState(true);
   const[q2,setQ2] = useState(true);
+  const[inputText, setInputText] = useState('')
+
+  const handlerPostUpdate = () => {
+    api.post(`/v1/feed/${props.id}`,{
+      changes: q1,
+      description: inputText
+    })
+    .then(response => {
+      props.toggle()
+      response.data.id 
+      ? Alert.alert('Checkin','Checkin realizado com sucesso!')
+      : Alert.alert('Checkin','Você não tem permissão de fazer Checkin!')
+      
+    })            
+    .catch(err => {
+      Alert.alert('Erro','Ocorreu um erro ao tentar realizar o Checkin')
+    })
+  }
 
   function handleToggleQ1(bol){
     setQ1(bol)
@@ -19,6 +39,7 @@ export default function index(props) {
       visible={props.visible}
       animationType='slide' 
       transparent={true}
+      onRequestClose={() => props.toggle()}
     >
       <TouchableWithoutFeedback onPress={() => props.toggle()}>
         <View style={{flex:1, backgroundColor:'rgba(0,0,0,0.4)'}} />
@@ -48,7 +69,7 @@ export default function index(props) {
           <>
 
           <View style={{marginTop:20}}>
-          <TextInput multiline={true} style={{color:'#FFF',backgroundColor:'#232129', borderRadius:5,height:100, textAlignVertical:'top', padding:5}} placeholder={"Descrição"}></TextInput>
+          <TextInput onChangeText={ text => setInputText(text)}  multiline={true} style={{color:'#FFF',backgroundColor:'#232129', borderRadius:5,height:100, textAlignVertical:'top', padding:5}} placeholder={"Descrição"}></TextInput>
           </View>
           
           <View style={{alignItems:'center',justifyContent:'center',flex:1}}>
@@ -85,7 +106,7 @@ export default function index(props) {
           </>
           }
         </ScrollView>
-        <TouchableOpacity style={{backgroundColor:'#FFF', borderRadius:10, height:60, justifyContent:'center',marginBottom:15, alignItems:'center',marginTop:20}}>
+        <TouchableOpacity onPress={() => handlerPostUpdate()} style={{backgroundColor:'#FFF', borderRadius:10, height:60, justifyContent:'center',marginBottom:15, alignItems:'center',marginTop:20}}>
               <Text style={{marginHorizontal:30, marginVertical:10,fontWeight:'bold',fontSize:16}}>Enviar</Text>
         </TouchableOpacity>
         </View>

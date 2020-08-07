@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {StatusBar, Text, ScrollView, View, Dimensions} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {StatusBar, Text, ScrollView, View, Dimensions, BackHandler,Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Animated} from 'react-native';
 import {PanGestureHandler, State, TouchableOpacity} from 'react-native-gesture-handler'
@@ -18,26 +18,23 @@ export default function Main(props){
 
   const screenWidth = Dimensions.get('window').width
   const [isOpenned, setIsOppened] = useState(false);
-  const [data,setData] = useState([1,2,3])
+  const [data,setData] = useState([])
+  const [percent,setPercent] = useState(0)
 
   function handleToggleModal(props){
     setIsOppened((prevState) => !prevState)
   }
 
-  useFocusEffect(() => {
-    api.get(`/v1/feed/${props.route.params.id}`, {
-      headers: {
-        authorization: 'Bearer ' + props.route.params.token
-      }
-    })
+  useEffect(() => {
+    api.get(`/v1/feed/${props.route.params.id}`)
     .then(response => {
       setData(response.data.feed)
-      console.log(response.data.feed)
+      setPercent(parseFloat(response.data.percent/100))
     })            
     .catch(err => {
       console.log(err)
     })
-  })
+  },[props])
 
   return(
     <>
@@ -45,27 +42,32 @@ export default function Main(props){
 				barStyle="light-content" 
 				backgroundColor="#312E38" 
 			/>
-      <Modal toggle={handleToggleModal} visible={isOpenned} />
+      <Modal id={props.route.params.id} toggle={handleToggleModal} visible={isOpenned} />
       <Container>
-				<Header name={props.route.params.id}/>
+				<Header name={props.route.params.name}/>
         <Content>
         <Card 
-						data={["1","2"]}
+						data={data}
 						renderItem={({item}) => (
-							<Item />
+              <Item 
+                description={item.description} 
+                changes={item.changes}
+                problems={!!item.problems}
+                last_checking={item.problems}
+                color={'#FFF'}
+              />
 						)}
-						keyExtractor={(item) => item}
+						keyExtractor={(item) => item.id}
 					/>
         </Content>
           <Text style={{color:'#FFF', marginHorizontal:20, marginTop:10}}>Status: EM ANDAMENTO</Text>
-          <Bar style={{marginHorizontal:20, marginTop:10}} height={10} color={'#00D37E'} progress={0.4} width={screenWidth * 0.9} />
+          <Bar style={{marginHorizontal:20, marginTop:10}} height={10} color={'#00D37E'} progress={percent} width={screenWidth * 0.9} />
           <View style={{alignItems:'center'}}>
-            <TouchableOpacity onPress={() => handleToggleModal()} style={{backgroundColor:'#232129', height:50, alignItem:'center',justifyContent:'center',borderRadius:5,paddingHorizontal:20,marginTop:10}}>
-              <Text style={{color:'#FFF', fontWeight:'bold'}}>MUDANÇAS / UPGRADE</Text>
-            </TouchableOpacity>
           </View>
-				<Tabs/>
+				<Tabs func={handleToggleModal}/>
 			</Container>
     </>
   );
 }
+
+//onPress={() => handleToggleModal()}

@@ -5,15 +5,11 @@ import {Container, Color, Content, Title} from './styles'
 
 export default function index(props) {
 
-  const handlerEvent = () => {
-    console.log('H')
-  }
-
   return (
     <Container onPress={props.nav} activeOpacity={0.5}>
-      <Color type={`${props.color}`}/>
+      <Color type={props.changes ? '#FFF' : '#F00'}/>
       <Content>
-        <Title>Inicio do Projeto - Gabriel -  EM ANDAMENTO</Title>
+        <Title>{props.description}</Title>
       </Content>
     </Container>
   )
