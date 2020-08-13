@@ -7,9 +7,9 @@ export default function index(props) {
 
   return (
     <Container onPress={props.nav} activeOpacity={0.5}>
-      <Color type={props.changes ? '#FFF' : '#F00'}/>
+      <Color type={props.changes ? '#3BBD89' : props.description === null ? '#FFF' : '#BD3A48'}/>
       <Content>
-        <Title>{props.description}</Title>
+        <Title>{props.dev}{props.description === null ? null : " : "+ props.description}</Title>
       </Content>
     </Container>
   )

@@ -1,10 +1,13 @@
 import React from 'react';
-import {Container, TabsContainer, TabItem, TabText} from './styles';
+import {Container, TabsContainer, TabItem, TabText, Linking} from './styles';
 
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons'
 
-export default function Tabs({func}){
+export default function Tabs({func, whats}){
+
+
+
 	return(
 		<Container>
 			<TabsContainer>
@@ -12,7 +15,9 @@ export default function Tabs({func}){
 					<Icon name="user-check" size={24} color="#FFF"/>
 					<TabText>Check in</TabText>
 				</TabItem>
-				<TabItem  activeOpacity={0.5}>
+				<TabItem onPress={whats} activeOpacity={0.5}>
+					<Icon name="whatsapp" size={26} color="#FFF"/>
+					<TabText>Whatsapp</TabText>
 				</TabItem>
 				<TabItem  activeOpacity={0.5}>
 				</TabItem>

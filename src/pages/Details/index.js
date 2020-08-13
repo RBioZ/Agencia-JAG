@@ -1,9 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StatusBar, Text, ScrollView, View, Dimensions, BackHandler,Alert} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import {Animated} from 'react-native';
-import {PanGestureHandler, State, TouchableOpacity} from 'react-native-gesture-handler'
-import { useFocusEffect } from "@react-navigation/native"
+import {StatusBar, Text, ScrollView, View, Dimensions, BackHandler,Alert, Linking, ActivityIndicator} from 'react-native';
 import {Container, Content, Card, CardHeader, CardContent, CardFooter, Title, Description, Annotation} from './styles';
 import Header from '../../components/Header';
 import Tabs from '../../components/Tabs';
@@ -20,6 +16,7 @@ export default function Main(props){
   const [isOpenned, setIsOppened] = useState(false);
   const [data,setData] = useState([])
   const [percent,setPercent] = useState(0)
+  const [loading,setLoading] = useState(true);
 
   function handleToggleModal(props){
     setIsOppened((prevState) => !prevState)
@@ -30,12 +27,19 @@ export default function Main(props){
     .then(response => {
       setData(response.data.feed)
       setPercent(parseFloat(response.data.percent/100))
+      setLoading(false)
     })            
     .catch(err => {
       console.log(err)
+      setLoading(false)
     })
   },[props])
 
+
+  function sendWhatsapp() {
+		Linking.openURL(`whatsapp://send?phone=+5521971224827&text=*Solicitar alteração*\nUsuário:${props.route.params.user}\nProjeto:${props.route.params.name}\n\nDescrição:`);
+  }
+  
   return(
     <>
 			<StatusBar 
@@ -46,10 +50,16 @@ export default function Main(props){
       <Container>
 				<Header name={props.route.params.name}/>
         <Content>
-        <Card 
+          {
+            loading
+            ?
+              <ActivityIndicator style={{flex:1,backgroundColor:'#232129', marginHorizontal:20, borderRadius:4}} size="large" color="#FFF" />
+            :
+            <Card 
 						data={data}
 						renderItem={({item}) => (
               <Item 
+                dev={item.dev.name}
                 description={item.description} 
                 changes={item.changes}
                 problems={!!item.problems}
@@ -59,12 +69,14 @@ export default function Main(props){
 						)}
 						keyExtractor={(item) => item.id}
 					/>
+          }
+
         </Content>
           <Text style={{color:'#FFF', marginHorizontal:20, marginTop:10}}>Status: EM ANDAMENTO</Text>
           <Bar style={{marginHorizontal:20, marginTop:10}} height={10} color={'#00D37E'} progress={percent} width={screenWidth * 0.9} />
           <View style={{alignItems:'center'}}>
           </View>
-				<Tabs func={handleToggleModal}/>
+				<Tabs whats={() => sendWhatsapp()} func={handleToggleModal}/>
 			</Container>
     </>
   );

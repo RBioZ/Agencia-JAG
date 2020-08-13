@@ -10,6 +10,7 @@ export const Container = styled.View`
 `;
 
 export const Card = styled.FlatList`
+	background:#232129;
 	flex:1;
 	border-radius: 4px;
 	margin: 0 20px;

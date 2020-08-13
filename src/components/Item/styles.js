@@ -1,12 +1,11 @@
 import styled from 'styled-components/native';
-import {StyleSheet, Animated} from 'react-native';
 
 export const Container = styled.TouchableOpacity`
   background-color:#3E3B47;
-  height:50px;
   margin:5px;
   flex-direction:row;
   border-radius:2px;
+  padding-right:3px;
 `;
 
 export const Color = styled.View`
@@ -20,7 +19,9 @@ export const Color = styled.View`
 export const Content = styled.View`
   flex:1;
   justify-content:center;
-  margin-left:10px
+  margin-left:10px;
+  padding-top:5px;
+  padding-bottom:5px;
 `;
 
 export const Title = styled.Text`

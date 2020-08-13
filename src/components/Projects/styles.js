@@ -24,5 +24,6 @@ export const Content = styled.View`
 
 export const Title = styled.Text`
   color:#FFF;
-  font-weight:bold
+  font-weight:bold;
+  font-size:16px;
 `;

@@ -8,7 +8,16 @@ export default function Menu(props){
   return(
 		<Container>
 
-			<Nav>
+
+			<SignOutButton onPress={props.logout}>
+				<SignOutButtonText>SAIR DO APP</SignOutButtonText>
+			</SignOutButton>
+
+		</Container>
+	);
+}
+
+/*
 				<NavItem>
 					<Icon name="help-outline" size={20} color="#FFF" />
 					<NavText>Me ajuda</NavText>
@@ -21,12 +30,4 @@ export default function Menu(props){
 					<Icon name="smartphone" size={20} color="#FFF" />
 					<NavText>Configurações do app</NavText>
 				</NavItem>
-			</Nav>
-
-			<SignOutButton onPress={props.logout}>
-				<SignOutButtonText>SAIR DO APP</SignOutButtonText>
-			</SignOutButton>
-
-		</Container>
-	);
-}
+*/

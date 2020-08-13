@@ -10,6 +10,12 @@ export default function index(props) {
   const[inputText, setInputText] = useState('')
 
   const handlerPostUpdate = () => {
+
+    if(!inputText.trim()){
+      Alert.alert('Descrição vazia','insira uma descrição!')
+      return
+    }
+
     api.post(`/v1/feed/${props.id}`,{
       changes: q1,
       description: inputText
@@ -22,7 +28,8 @@ export default function index(props) {
       
     })            
     .catch(err => {
-      Alert.alert('Erro','Ocorreu um erro ao tentar realizar o Checkin')
+      console.log(err)
+      Alert.alert('Checkin','Você não tem permissão de fazer Checkin!')
     })
   }
 
@@ -69,7 +76,7 @@ export default function index(props) {
           <>
 
           <View style={{marginTop:20}}>
-          <TextInput onChangeText={ text => setInputText(text)}  multiline={true} style={{color:'#FFF',backgroundColor:'#232129', borderRadius:5,height:100, textAlignVertical:'top', padding:5}} placeholder={"Descrição"}></TextInput>
+          <TextInput maxLength={40} onChangeText={ text => setInputText(text)}  multiline={true} style={{color:'#FFF',backgroundColor:'#232129', borderRadius:5,height:100, textAlignVertical:'top', padding:5}} placeholder={"Descrição"}></TextInput>
           </View>
           
           <View style={{alignItems:'center',justifyContent:'center',flex:1}}>
@@ -99,7 +106,7 @@ export default function index(props) {
           <>
           <Text style={{marginVertical:20,color:'#FFF', fontWeight:'bold',fontSize:16, textAlign:'center'}}>Houve algum obstáculo, que impediu de seguir com o projeto?</Text>
           <View>
-          <TextInput multiline={true} style={{color:'#FFF',backgroundColor:'#232129', borderRadius:5,height:100, textAlignVertical:'top', padding:5}} placeholder={"Descrição"}></TextInput>
+          <TextInput onChangeText={ text => setInputText(text)} maxLength={40} multiline={true} style={{color:'#FFF',backgroundColor:'#232129', borderRadius:5,height:100, textAlignVertical:'top', padding:5}} placeholder={"Descrição"}></TextInput>
           </View>
           </>
           }
