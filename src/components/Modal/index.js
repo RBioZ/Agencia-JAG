@@ -8,17 +8,19 @@ export default function index(props) {
   const[q1,setQ1] = useState(true);
   const[q2,setQ2] = useState(true);
   const[inputText, setInputText] = useState('')
+  const[problemsText, setProblemsText] = useState('')
 
   const handlerPostUpdate = () => {
 
-    if(!inputText.trim()){
+    if(!inputText.trim() && !problemsText.trim()){
       Alert.alert('Descrição vazia','insira uma descrição!')
       return
     }
 
     api.post(`/v1/feed/${props.id}`,{
       changes: q1,
-      description: inputText
+      description: inputText,
+      problems: problemsText
     })
     .then(response => {
       props.toggle()
@@ -30,6 +32,14 @@ export default function index(props) {
     .catch(err => {
       console.log(err)
       Alert.alert('Checkin','Você não tem permissão de fazer Checkin!')
+    })
+
+    api.put(`/v1/feed/${props.id}`)
+    .then(response => {
+      
+    })            
+    .catch(err => {
+      Alert.alert('Erro','Ocorreu um erro ao realizar o checkin!')
     })
   }
 
@@ -106,7 +116,7 @@ export default function index(props) {
           <>
           <Text style={{marginVertical:20,color:'#FFF', fontWeight:'bold',fontSize:16, textAlign:'center'}}>Houve algum obstáculo, que impediu de seguir com o projeto?</Text>
           <View>
-          <TextInput onChangeText={ text => setInputText(text)} maxLength={40} multiline={true} style={{color:'#FFF',backgroundColor:'#232129', borderRadius:5,height:100, textAlignVertical:'top', padding:5}} placeholder={"Descrição"}></TextInput>
+          <TextInput onChangeText={ text => setProblemsText(text)} maxLength={40} multiline={true} style={{color:'#FFF',backgroundColor:'#232129', borderRadius:5,height:100, textAlignVertical:'top', padding:5}} placeholder={"Descrição"}></TextInput>
           </View>
           </>
           }

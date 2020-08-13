@@ -62,9 +62,7 @@ export default function Main(props){
                 dev={item.dev.name}
                 description={item.description} 
                 changes={item.changes}
-                problems={!!item.problems}
-                last_checking={item.problems}
-                color={'#FFF'}
+                problems={item.problems}
               />
 						)}
 						keyExtractor={(item) => item.id}
